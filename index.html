@@ -5,462 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Think Before You Prompt</title>
   <!-- Add a webfont and minor meta -->
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', Arial, sans-serif; margin: 0; line-height: 1.6; color: #1f2937; background:#f8fafc; }
-
-    /* NEW: Sticky navigation bar */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 100;
-      padding: 1rem 1.5rem;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-    }
-
-    nav.visible {
-      max-height: 60px;
-      padding: 0.8rem 1.5rem;
-    }
-
-    nav ul {
-      display: flex;
-      gap: 2rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #1f2937;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: color 0.3s ease;
-      position: relative;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #4f46e5;
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after { width: 100%; }
-
-    /* NEW: Scroll reveal animations */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* NEW: Parallax effect for images */
-    .parallax-img {
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-
-    section#creative-output > img {
-      animation: slideInImage 1s ease-out forwards;
-    }
-
-    @keyframes slideInImage {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* Enhanced header with animated background carousel */
-    header {
-      background: linear-gradient(135deg, #0f172a, #1e1b4b);
-      position: relative;
-      overflow: hidden;
-      padding: 6rem 1.5rem;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=60');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.15;
-      animation: slideBackground 20s ease-in-out infinite;
-      z-index: 0;
-    }
-
-    header::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(15,23,42,0.75), rgba(30,27,75,0.85));
-      z-index: 1;
-    }
-
-    @keyframes slideBackground {
-      0%, 100% { background-position: center; }
-      50% { background-position: center 20px; }
-    }
-
-    header > * {
-      position: relative;
-      z-index: 2;
-    }
-
-    header h1 {
-      font-size: 3.2rem;
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #ffffff, #e0e7ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: fadeInDown 1.2s ease-out;
-    }
-
-    header .hero-sub {
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: #c7d2fe;
-      opacity: 1;
-      animation: fadeInUp 1.4s ease-out;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    /* Animated accent lines and dots */
-    .header-accent {
-      position: absolute;
-      border-radius: 50%;
-      opacity: 0.1;
-      animation: float 8s ease-in-out infinite;
-    }
-
-    .accent-1 {
-      width: 300px;
-      height: 300px;
-      background: #4f46e5;
-      top: -100px;
-      right: -100px;
-      animation-delay: 0s;
-    }
-
-    .accent-2 {
-      width: 200px;
-      height: 200px;
-      background: #7c3aed;
-      bottom: -50px;
-      left: -50px;
-      animation-delay: 2s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) translateX(0px); }
-      50% { transform: translateY(-30px) translateX(15px); }
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    section { padding: 3rem 1.5rem; max-width: 1000px; margin: auto; animation: slideUp 0.9s ease; }
-    h1 { font-size: 2.8rem; margin-bottom: 0.5rem; }
-    h2 { font-size: 2rem; margin-bottom: 1rem; }
-    h3 { margin-top: 1.5rem; }
-    .hero-sub { font-size: 1.1rem; opacity: 0.9; }
-    .cta { background: #eef2ff; border-left: 6px solid #4f46e5; padding: 2rem; margin-top: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease; }
-    .cta:hover { transform: translateY(-4px); }
-    .grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; margin-top: 2rem; }
-    .card { background: #ffffff; padding: 1.8rem; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-    .icon { font-size: 2rem; margin-bottom: 0.5rem; }
-    img { max-width: 100%; border-radius: 14px; margin-top: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-    footer { background: #020617; color: #e5e7eb; text-align: center; padding: 2rem; margin-top: 3rem; }
-    ul { margin-left: 1.2rem; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    
-    .pillar {
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-      padding: 1.8rem;
-      cursor: pointer;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      position: relative;
-      border: 2px solid transparent;
-      background-image: 
-        linear-gradient(#ffffff, #ffffff),
-        linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4);
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-    }
-
-    .pillar::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 14px;
-      padding: 2px;
-      background: linear-gradient(135deg, #4f46e5, #7c3aed, #06b6d4);
-      background-size: 200% 200%;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      animation: gradientShift 6s ease infinite;
-      transition: opacity 0.3s ease;
-    }
-
-    .pillar:hover::before {
-      opacity: 1;
-    }
-
-    .pillar:hover {
-      box-shadow: 0 15px 40px rgba(79, 70, 229, 0.2);
-      transform: translateY(-4px);
-    }
-
-    .icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      display: inline-block;
-      animation: bounce-float 4s ease-in-out infinite;
-    }
-
-    .pillar:nth-child(1) .icon { animation-delay: 0s; }
-    .pillar:nth-child(2) .icon { animation-delay: 0.5s; }
-    .pillar:nth-child(3) .icon { animation-delay: 1s; }
-    .pillar:nth-child(4) .icon { animation-delay: 1.5s; }
-
-    /* NEW: Quote carousel */
-    .quote-carousel {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: #fff;
-      padding: 2.5rem;
-      border-radius: 16px;
-      margin: 2rem 0;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .quote-carousel::before {
-      content: '"';
-      position: absolute;
-      font-size: 8rem;
-      opacity: 0.1;
-      top: -40px;
-      left: 20px;
-      font-family: Georgia, serif;
-    }
-
-    .quote-carousel p {
-      font-size: 1.3rem;
-      font-weight: 500;
-      position: relative;
-      z-index: 2;
-      margin: 0;
-      animation: fadeInQuote 0.8s ease-in;
-    }
-
-    @keyframes fadeInQuote {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .quote-nav {
-      display: flex;
-      gap: 0.8rem;
-      justify-content: center;
-      margin-top: 1.2rem;
-    }
-
-    .quote-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .quote-dot.active { background: #fff; }
-
-    /* Design gallery */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 2rem;
-      align-items: start;
-    }
-    .gallery figure {
-      margin: 0;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(10, 15, 30, 0.06);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .gallery figure::after {
-      content: '👁️';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(79, 70, 229, 0.7);
-      color: #fff;
-      font-size: 2rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 10;
-    }
-
-    .gallery figure:hover::after { opacity: 1; }
-    .gallery figure:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 50px rgba(10,15,30,0.15); }
-
-    .gallery img { 
-      display: block; 
-      width: 100%; 
-      height: 180px; 
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    .gallery figure:hover img { transform: scale(1.1); }
-
-    .gallery figcaption {
-      padding: 0.9rem 1rem;
-      font-size: 0.9rem;
-      color: #374151;
-      background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    }
-
-    @media (max-width: 1000px) {
-      .gallery { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 700px) {
-      .gallery { grid-template-columns: 1fr; }
-    }
-
-    /* Lightbox modal */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(2,6,23,0.7);
-      z-index: 1200;
-      padding: 2rem;
-    }
-    .lightbox.visible { display: flex; }
-    .lightbox-content {
-      max-width: 1100px;
-      width: 100%;
-      max-height: 90vh;
-      overflow: auto;
-      border-radius: 12px;
-      background: #fff;
-      padding: 1rem;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.4);
-      text-align: center;
-    }
-    .lightbox img { width: 100%; height: auto; border-radius: 8px; }
-    .lightbox .caption { margin-top: 0.6rem; color: #374151; font-size: 0.95rem; }
-    .lightbox .close {
-      position: absolute;
-      right: 1.25rem;
-      top: 1.25rem;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    /* small swatches for 'creative output' feel */
-    .swatches { display:flex; gap:0.6rem; margin-top:1rem; align-items:center; }
-    .swatches > span { width:28px; height:28px; border-radius:6px; box-shadow:0 5px 12px rgba(0,0,0,0.08); }
-    .swatches .p1 { background: linear-gradient(135deg,#4f46e5,#7c3aed); }
-    .swatches .p2 { background: linear-gradient(135deg,#06b6d4,#06b6b9); }
-    .swatches .p3 { background: linear-gradient(135deg,#ffb86c,#ff7a59); }
-
-    /* NEW: Stat counter */
-    .stat-box {
-      background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-    }
-
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #4f46e5;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .stat-label {
-      color: #6b7280;
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-
-    @media (max-width: 700px) {
-      .stats-grid { grid-template-columns: 1fr; }
-      nav ul { gap: 1rem; }
-    }
-
+  /* ...existing code... */
+  .rationale-tab {
+    background: #e0e7ff;
+    color: #4f46e5;
+    padding: 0.5rem 1.2rem;
+    border-radius: 16px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .rationale-tab.active {
+    background: #4f46e5 !important;
+    color: #fff !important;
+  }
+  .rationale-accent {
+    animation: rationaleFloat 14s ease-in-out infinite alternate;
+  }
+  @keyframes rationaleFloat {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-12px) scale(1.04); }
+    100% { transform: translateY(8px) scale(1.01); }
+  }
+  /* ...existing code... */
   </style>
 </head>
 
@@ -468,6 +39,7 @@
 
 <nav id="navbar">
   <ul>
+    <li><a href="#overview">Overview</a></li>
     <li><a href="#creative-output">Action</a></li>
     <li><a href="#rationale">Rationale</a></li>
     <li><a href="#profile">Profile</a></li>
@@ -481,8 +53,8 @@
   <p class="hero-sub">A Call to Action for Ethical, Responsible, and Critical Use of Artificial Intelligence</p>
 </header>
 
-<section id="creative-output">
-  <h2>Creative Output: Call to Action</h2>
+<section id="overview">
+  <h2>Artificial Intelligence</h2>
   <p class="reveal">
     Artificial Intelligence is no longer a distant future, it is embedded in how we study, work,
     communicate, and make decisions. From generative AI tools to automated decision systems, AI
@@ -490,6 +62,121 @@
   </p>
 
   <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995" alt="Abstract AI visualization" />
+
+  <!-- Enhanced design gallery with filters and captions -->
+  <div class="gallery-header">
+    <h3 class="gallery-title">Real-World Applications of AI</h3>
+    <div class="gallery-filters" id="gallery-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="education">Education</button>
+      <button class="filter-btn" data-filter="healthcare">Healthcare</button>
+      <button class="filter-btn" data-filter="society">Society & Work</button>
+    </div>
+  </div>
+
+  <div class="gallery" aria-label="Real-world applications of AI across industries">
+    <figure data-category="education" class="gallery-item">
+      <span class="gallery-category">Education</span>
+      <img src="https://images.pexels.com/photos/4145198/pexels-photo-4145198.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Student learning with digital tools" />
+      <div class="gallery-info">
+        <figcaption>AI in Personalized Learning</figcaption>
+        <p class="gallery-description">Adaptive learning systems use AI to tailor educational content to individual student needs, tracking progress and adjusting difficulty in real-time.</p>
+        <div class="gallery-meta">
+          <span class="meta-item">🎓 Education</span>
+          <span class="meta-item">📊 Personalization</span>
+        </div>
+      </div>
+    </figure>
+
+    <figure data-category="healthcare" class="gallery-item">
+      <span class="gallery-category">Healthcare</span>
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=60" alt="AI medical diagnostic scan" />
+      <div class="gallery-info">
+        <figcaption>AI-Assisted Medical Diagnosis</figcaption>
+        <p class="gallery-description">Machine learning models analyze medical imaging and patient data to assist doctors in disease detection and treatment planning, improving accuracy and speed.</p>
+        <div class="gallery-meta">
+          <span class="meta-item">⚕️ Healthcare</span>
+          <span class="meta-item">🔬 Diagnostics</span>
+        </div>
+      </div>
+    </figure>
+
+    <figure data-category="society" class="gallery-item">
+      <span class="gallery-category">Society & Work</span>
+      <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=70" alt="AI automation in workplace">
+      <div class="gallery-info">
+        <figcaption>Automation in the Workplace</figcaption>
+        <p class="gallery-description">AI-powered automation handles routine tasks in manufacturing, customer service, and data processing, reshaping job markets and labor practices globally.</p>
+        <div class="gallery-meta">
+          <span class="meta-item">💼 Employment</span>
+          <span class="meta-item">⚙️ Automation</span>
+        </div>
+      </div>
+    </figure>
+
+    <figure data-category="education" class="gallery-item">
+      <span class="gallery-category">Education</span>
+      <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=70" alt="Using AI content tools">
+      <div class="gallery-info">
+        <figcaption>Generative AI for Writing & Content</figcaption>
+        <p class="gallery-description">Tools like ChatGPT assist with essay writing, research, and content creation—raising important questions about academic integrity and critical thinking.</p>
+        <div class="gallery-meta">
+          <span class="meta-item">✍️ Content creation</span>
+          <span class="meta-item">🤔 Ethical concerns</span>
+        </div>
+      </div>
+    </figure>
+
+    <figure data-category="society" class="gallery-item">
+      <span class="gallery-category">Society & Work</span>
+      <img src="https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Team analyzing data on screens" />
+      <div class="gallery-info">
+        <figcaption>Algorithmic Decision-Making</figcaption>
+        <p class="gallery-description">AI systems make decisions in hiring, loan approvals, and criminal justice—often perpetuating historical biases and affecting millions of lives without transparency.</p>
+        <div class="gallery-meta">
+          <span class="meta-item">⚖️ Justice & fairness</span>
+          <span class="meta-item">⚠️ Bias & accountability</span>
+        </div>
+      </div>
+    </figure>
+
+    <figure data-category="healthcare" class="gallery-item">
+      <span class="gallery-category">Healthcare</span>
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=70" alt="AI medical diagnostic scan">
+      <div class="gallery-info">
+        <figcaption>AI in Drug Discovery & Research</figcaption>
+        <p class="gallery-description">AI accelerates pharmaceutical development by analyzing molecular structures and predicting drug interactions, potentially saving lives and reducing research costs.</p>
+        <div class="gallery-meta">
+          <span class="meta-item">🔬 Research</span>
+          <span class="meta-item">💊 Innovation</span>
+        </div>
+      </div>
+    </figure>
+  </div>
+
+  <div class="gallery-counter">
+    <span id="gallery-count">6</span> real-world applications of AI shaping our world
+  </div>
+</section>
+
+<section id="creative-output">
+  <div class="section-header action-header">
+    <div class="header-accent accent-1"></div>
+    <div class="header-accent accent-2"></div>
+
+    <h2>Take Action</h2>
+    <p style="color:#e0e7ff; font-size:1.05rem; max-width:600px; margin:0 auto; text-shadow:0 2px 12px rgba(0,0,0,0.18); text-align:center;">
+      <span style="display:block;margin-bottom:0.7em;">
+        Now that you've seen how AI is shaping our world, it's time to reflect on your own role. 
+        <strong>How can you make sure your use of AI is thoughtful, ethical, and empowering?</strong>
+      </span>
+      The journey from awareness to action starts here. Explore the four pillars below and commit to responsible engagement with AI in your studies, work, and daily life.
+    </p>
+    <hr/>
+    <p class="hero-sub">
+      Use artificial intelligence ethically, critically, and responsibly in your daily life.
+    </p>
+  </div>
 
   <!-- NEW: Quote carousel -->
   <div class="quote-carousel">
@@ -569,116 +256,191 @@
     </div>
   </div>
 
-  <!-- NEW: Stats section -->
-  <div class="stats-grid" id="stats">
-    <div class="stat-box reveal">
-      <div class="stat-number" data-count="92">0</div>
-      <div class="stat-label">% of students use AI tools</div>
+  <!-- NEW: Key Takeaways section -->
+  <div class="takeaways-grid" id="takeaways">
+    <div class="takeaway-card reveal">
+      <div class="takeaway-icon">🚀</div>
+      <div class="takeaway-title">
+        <span>Start with Skepticism</span>
+        <span class="takeaway-toggle">+</span>
+      </div>
+      <p class="takeaway-description">
+        Don't accept AI outputs at face value. Question the source, verify claims, and consider what data the model was trained on. Critical thinking is your first line of defense against misinformation and errors.
+      </p>
+      <div class="takeaway-stats">
+        <div class="stat-item">
+          <div class="stat-name">
+            AI systems can produce misleading or biased outputs, making critical evaluation essential for users.
+            <br>
+            <a href="https://mb.com.ph/2024/10/31/critical-thinking-in-the-use-of-ai"
+              target="_blank" rel="noopener noreferrer">
+              Source: Manila Bulletin — “Critical thinking in the use of AI” (2024)
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="stat-box reveal">
-      <div class="stat-number" data-count="68">0</div>
-      <div class="stat-label">% concerned about bias</div>
+
+    <div class="takeaway-card reveal">
+      <div class="takeaway-icon">⚡</div>
+      <div class="takeaway-title">
+        <span>Know Your Rights</span>
+        <span class="takeaway-toggle">+</span>
+      </div>
+      <p class="takeaway-description">
+        Understand how your data is used, who owns your work when AI is involved, and what algorithmic decisions may affect you. Transparency and consent matter. Advocate for explainability in systems that impact your life.
+      </p>
+      <div class="takeaway-stats">
+        <div class="stat-item">
+          <div class="stat-name">
+            Without clear rules and safeguards, AI systems can harm the public through discrimination,
+            misinformation, and lack of accountability.
+            <br>
+            <a href="https://www.pids.gov.ph/details/news/press-releases/ai-without-rules-can-harm-the-public-experts-warn"
+              target="_blank" rel="noopener noreferrer">
+              Source: Philippine Institute for Development Studies (PIDS)
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="stat-box reveal">
-      <div class="stat-number" data-count="84">0</div>
-      <div class="stat-label">% support AI literacy</div>
+
+    <div class="takeaway-card reveal">
+      <div class="takeaway-icon">🌟</div>
+      <div class="takeaway-title">
+        <span>Act Responsibly</span>
+        <span class="takeaway-toggle">+</span>
+      </div>
+      <p class="takeaway-description">
+        Use AI as a tool to amplify your thinking, not replace it. Acknowledge when you've used AI, credit human creators, and choose to engage with technology that aligns with your values. Every choice shapes the future.
+      </p>
+      <div class="takeaway-stats">
+        <div class="stat-item">
+          <div class="stat-name">
+            Ethical AI use requires transparency, accountability, and respect for human rights,
+            according to international and local experts.
+            <br>
+            <a href="https://philippines.un.org/en/254441-un-convenes-forum-ethical-use-ai"
+              target="_blank" rel="noopener noreferrer">
+              Source: United Nations Philippines — Ethical Use of AI
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- New design gallery to showcase creative output (images + captions) -->
-  <div class="gallery" aria-label="Design gallery: moodboard and creative assets">
-    <figure data-caption="Think Before You Prompt — poster concept">
-      <img src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?auto=format&fit=crop&w=1200&q=60" alt="Poster concept with typographic treatment" />
-      <figcaption>Poster concept — typographic focus</figcaption>
-    </figure>
-    <figure data-caption="AI ethics moodboard">
-      <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1200&q=60" alt="Collage of illustrations about AI ethics" />
-      <figcaption>AI ethics moodboard</figcaption>
-    </figure>
-    <figure data-caption="Interactive page mockup">
-      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=60" alt="Webpage mockup showing interface layout" />
-      <figcaption>Interactive mockup — accessibility-first</figcaption>
-    </figure>
-
-    <figure data-caption="Color and texture exploration">
-      <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?auto=format&fit=crop&w=1200&q=60" alt="Abstract textures and colors" />
-      <figcaption>Color and texture exploration</figcaption>
-    </figure>
-    <figure data-caption="Photography for human-centered AI">
-      <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1200&q=60" alt="People collaborating around a laptop" />
-      <figcaption>Photography — human-centered AI</figcaption>
-    </figure>
-    <figure data-caption="Poster download sample">
-      <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=60" alt="Poster laid on a wooden surface" />
-      <figcaption>Poster mockup — download ready</figcaption>
-    </figure>
-  </div>
-</section>
 
 <section id="rationale">
-  <h2>Background and Rationale</h2>
-
-  <h3>Why this topic and this creative output?</h3>
-<p>
-  I chose artificial intelligence as an advocacy topic because AI technologies increasingly
-  influence education, employment, governance, and public discourse. As a Computer Science student
-  at the University of the Philippines Diliman, I encounter AI not only as a user-facing tool but
-  as a system designed, trained, and deployed through technical decisions that carry social and
-  ethical consequences. While AI promises efficiency and innovation, it also raises concerns about
-  misinformation, academic dishonesty, algorithmic bias, data exploitation, and the erosion of
-  critical thinking. These issues affect students and citizens directly, yet public understanding
-  of AI often lags behind its rapid adoption.
-</p>
-
-<p>
-  I chose a website as the creative output because it reflects the very environment where AI tools
-  are most commonly encountered—online and within digital platforms. From a computing perspective,
-  a website allows the integration of structure, interactivity, and design to communicate ideas
-  responsibly and effectively. It enables the advocacy to combine explanation, reflection, and
-  action in a format that is accessible, shareable, and scalable, while also modeling ethical
-  digital communication through clarity, transparency, and intentional user experience design.
-</p>
-
-
-
-  <h3>Thought process and construction</h3>
-  <p>
-    The central idea of this project is captured in the phrase <em>“Think Before You Prompt.”</em>
-    This slogan reframes AI use as a moral and intellectual decision rather than a purely technical
-    one. I structured the website to first contextualize the issue, then present a clear call to
-    action, and finally explain the reasoning behind the advocacy.
-  </p>
-  <p>
-    The content avoids alarmist language and instead emphasizes agency and responsibility. The
-    design is intentionally minimal to reduce distraction and reflect the value of thoughtful
-    engagement. The bullet-pointed call to action translates abstract ethical concerns into concrete
-    practices that students and everyday users can adopt immediately.
-  </p>
-
-  <h3>Course concepts applied</h3>
-  <p>
-    This work applies course concepts on public intellectualism, ethics of communication, and
-    critical technological literacy. It positions the creator as a mediator between expert knowledge
-    and public understanding, translating complex debates about AI into accessible language. The
-    advocacy also draws from framing theory by presenting AI use as a shared social responsibility
-    rather than an individual moral failing.
-  </p>
-  <p>
-    Additionally, the project reflects lessons on audience-centered advocacy and responsible
-    knowledge production, emphasizing reflection, accountability, and civic engagement in
-    technology-driven societies.
-  </p>
+  <!-- Creative & Interactive Background and Rationale Section -->
+  <div class="rationale-wrapper" style="padding: 2.5rem 1.5rem 2rem 1.5rem; margin-bottom:2.5rem; overflow:hidden;">
+    <svg class="rationale-accent" width="90" height="90" viewBox="0 0 90 90" fill="none" style="position:absolute;top:18px;right:18px;z-index:0;">
+      <rect x="10" y="10" width="70" height="70" rx="18" stroke="#7c3aed" stroke-width="4" stroke-opacity="0.35"/>
+      <rect x="25" y="25" width="40" height="40" rx="10" stroke="#06b6d4" stroke-width="2" stroke-opacity="0.55"/>
+    </svg>
+    <h2 style="font-size:2rem; font-weight:700; color:#4f46e5; margin-bottom:1.2rem; text-align:center;">
+      Background & Rationale
+    </h2>
+    <div id="rationale-tabs" style="display:flex;justify-content:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <button class="rationale-tab active" data-tab="why">Why AI?</button>
+      <button class="rationale-tab" data-tab="website">Why a Website?</button>
+      <button class="rationale-tab" data-tab="process">Thought Process</button>
+      <button class="rationale-tab" data-tab="course">Course Concepts</button>
+    </div>
+    <div id="rationale-content">
+      <div class="rationale-panel" data-tab="why" style="display:block;">
+        <h3>Why this topic and this creative output?</h3>
+        <p>
+          I chose artificial intelligence as an advocacy topic because AI technologies increasingly
+          influence education, employment, governance, and public discourse. As a Computer Science student
+          at the University of the Philippines Diliman, I encounter AI not only as a user-facing tool but
+          as a system designed, trained, and deployed through technical decisions that carry social and
+          ethical consequences. While AI promises efficiency and innovation, it also raises concerns about
+          misinformation, academic dishonesty, algorithmic bias, data exploitation, and the erosion of
+          critical thinking. These issues affect students and citizens directly, yet public understanding
+          of AI often lags behind its rapid adoption.
+        </p>
+        <div style="margin-top:1.2rem;">
+          <span style="background:#06b6d4;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">🚦 Societal Impact</span>
+          <span style="background:#7c3aed;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">🧑‍💻 Student Perspective</span>
+        </div>
+      </div>
+      <div class="rationale-panel" data-tab="website" style="display:none;">
+        <h3>Why a website?</h3>
+        <p>
+          I chose a website as the creative output because it reflects the very environment where AI tools
+          are most commonly encountered—online and within digital platforms. From a computing perspective,
+          a website allows the integration of structure, interactivity, and design to communicate ideas
+          responsibly and effectively. It enables the advocacy to combine explanation, reflection, and
+          action in a format that is accessible, shareable, and scalable, while also modeling ethical
+          digital communication through clarity, transparency, and intentional user experience design.
+        </p>
+        <div style="margin-top:1.2rem;">
+          <span style="background:#4f46e5;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">🌐 Digital Advocacy</span>
+          <span style="background:#06b6d4;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">📱 Accessibility</span>
+        </div>
+      </div>
+      <div class="rationale-panel" data-tab="process" style="display:none;">
+        <h3>Thought process and construction</h3>
+        <p>
+          The central idea of this project is captured in the phrase <em>“Think Before You Prompt.”</em>
+          This slogan reframes AI use as a moral and intellectual decision rather than a purely technical
+          one. I structured the website to first contextualize the issue, then present a clear call to
+          action, and finally explain the reasoning behind the advocacy.
+        </p>
+        <p>
+          The content avoids alarmist language and instead emphasizes agency and responsibility. The
+          design is intentionally minimal to reduce distraction and reflect the value of thoughtful
+          engagement. The bullet-pointed call to action translates abstract ethical concerns into concrete
+          practices that students and everyday users can adopt immediately.
+        </p>
+        <div style="margin-top:1.2rem;">
+          <span style="background:#7c3aed;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">📝 Slogan</span>
+          <span style="background:#4f46e5;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">🎯 Structure</span>
+        </div>
+      </div>
+      <div class="rationale-panel" data-tab="course" style="display:none;">
+        <h3>Course concepts applied</h3>
+        <p>
+          This work applies course concepts on public intellectualism, ethics of communication, and
+          critical technological literacy. It positions the creator as a mediator between expert knowledge
+          and public understanding, translating complex debates about AI into accessible language. The
+          advocacy also draws from framing theory by presenting AI use as a shared social responsibility
+          rather than an individual moral failing.
+        </p>
+        <p>
+          Additionally, the project reflects lessons on audience-centered advocacy and responsible
+          knowledge production, emphasizing reflection, accountability, and civic engagement in
+          technology-driven societies.
+        </p>
+        <div style="margin-top:1.2rem;">
+          <span style="background:#06b6d4;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">📚 Ethics</span>
+          <span style="background:#7c3aed;color:#fff;padding:0.35rem 1rem;border-radius:16px;font-size:0.95rem;font-weight:500;">🗣️ Communication</span>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:-30px;left:-30px;z-index:0;">
+      <svg class="rationale-accent" width="120" height="120" viewBox="0 0 120 120" fill="none">
+        <rect x="20" y="20" width="80" height="80" rx="24" stroke="#4f46e5" stroke-width="4" stroke-opacity="0.25"/>
+        <rect x="40" y="40" width="40" height="40" rx="10" stroke="#7c3aed" stroke-width="2" stroke-opacity="0.85"/>
+      </svg>
+    </div>
+  </div>
 </section>
 
 <section id="profile">
-  <h2>Profile as a Public Intellectual</h2>
+  <h2>Author's Profile</h2>
+
+  <div class="profile-intro">
+    <img src="images/marc.jpeg" alt="Marc" class="profile-avatar" />
+    <h3 style="margin-top: 0;">Marc Emanuel Dela Paz</h3>
+  </div>
 
   <h3>Bionote</h3>
   <p>
     I am a Computer Science student at the University of the Philippines Diliman and an emerging
     public intellectual concerned with how artificial intelligence reshapes learning, knowledge
     production, and public discourse. I engage with AI both as a technical system and as a social
-    force, focusing on how design choices, data, and automation influence human agency, ethics,
+    force, focusing on how design choices, data, and influence automation have on human agency, ethics,
     and responsibility.
   </p>
 
@@ -695,7 +457,8 @@
     I am currently pursuing undergraduate studies in Computer Science at UP Diliman. My academic
     interests lie at the intersection of programming and society, including algorithmic bias,
     explainable AI, human–computer interaction, and the ethical implications of automated systems
-    in education and governance.
+    in education and governance. I am also interested in using digital systems to ensure theoretical
+    concepts are secure, sure, and reliable.
   </p>
 
   <h3>Areas of Expertise</h3>
@@ -709,6 +472,10 @@
 
 <footer>
   <p>© 2025 Think Before You Prompt | Creative design & advocacy for Ethical AI Use | Design assets: Unsplash</p>
+  <p style="font-size:0.85rem; opacity:0.8; margin-top:0.6rem;">
+    AI Use Disclosure: This project used generative AI tools for ideation and technical assistance.
+    Final content and decisions are human-authored.
+  </p>
 </footer>
 
 <!-- Lightbox modal -->
@@ -826,13 +593,43 @@
   const statsSection = document.getElementById('stats');
   if (statsSection) statsObserver.observe(statsSection);
 
-  // ...existing pillar and lightbox code...
-  document.querySelectorAll('.pillar').forEach(pillar => {
-    pillar.addEventListener('click', () => {
-      pillar.classList.toggle('expanded');
+  // Key takeaways card expansion
+  document.querySelectorAll('.takeaway-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('expanded');
     });
   });
 
+  // Gallery filter functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  const galleryCount = document.getElementById('gallery-count');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      // Update active button
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Filter items
+      let visibleCount = 0;
+      galleryItems.forEach(item => {
+        if (filter === 'all' || item.dataset.category === filter) {
+          item.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      // Update counter
+      galleryCount.textContent = visibleCount;
+    });
+  });
+
+  // Lightbox for gallery images
   (function() {
     const lightbox = document.getElementById('lightbox');
     const lbImage = document.getElementById('lb-image');
@@ -847,6 +644,7 @@
       lightbox.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
+
     function closeLightbox() {
       lightbox.classList.remove('visible');
       lightbox.setAttribute('aria-hidden', 'true');
@@ -855,19 +653,11 @@
       lbCaption.textContent = '';
     }
 
-    document.querySelectorAll('.gallery figure').forEach(fig => {
+    document.querySelectorAll('.gallery-item').forEach(fig => {
       fig.addEventListener('click', () => {
         const img = fig.querySelector('img');
-        const caption = fig.dataset.caption || (fig.querySelector('figcaption') && fig.querySelector('figcaption').innerText);
+        const caption = fig.querySelector('figcaption').innerText;
         openLightbox(img.src, img.alt, caption);
-      });
-    });
-
-    document.querySelectorAll('.pillar-details img').forEach(img => {
-      img.style.cursor = 'zoom-in';
-      img.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openLightbox(img.src, img.alt || '', '');
       });
     });
 
@@ -879,6 +669,18 @@
       if (e.key === 'Escape' && lightbox.classList.contains('visible')) closeLightbox();
     });
   })();
+
+  // Interactive rationale tabs (fixed for highlight)
+  document.querySelectorAll('.rationale-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.rationale-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const selected = tab.getAttribute('data-tab');
+      document.querySelectorAll('.rationale-panel').forEach(panel => {
+        panel.style.display = panel.getAttribute('data-tab') === selected ? 'block' : 'none';
+      });
+    });
+  });
 </script>
 
 </body>
