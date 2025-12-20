@@ -7,108 +7,6 @@
   <!-- Add a webfont and minor meta -->
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-  /* ...existing code... */
-  .rationale-tab {
-    background: #e0e7ff;
-    color: #4f46e5;
-    padding: 0.5rem 1.2rem;
-    border-radius: 16px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .rationale-tab.active {
-    background: #4f46e5 !important;
-    color: #fff !important;
-  }
-  .rationale-accent {
-    animation: rationaleFloat 14s ease-in-out infinite alternate;
-  }
-  @keyframes rationaleFloat {
-    0% { transform: translateY(0px) scale(1); }
-    50% { transform: translateY(-12px) scale(1.04); }
-    100% { transform: translateY(8px) scale(1.01); }
-  }
-  .pillar {
-    /* ...existing code... */
-    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s, background 0.3s;
-    outline: none;
-  }
-  .pillar.expanded {
-    border-color: #4f46e5;
-    background: linear-gradient(135deg, #eef2ff 60%, #e0e7ff 100%);
-    box-shadow: 0 16px 48px rgba(79,70,229,0.10);
-    z-index: 2;
-  }
-  .pillar-details {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.5s cubic-bezier(.4,2,.6,1), opacity 0.4s;
-    margin-top: 0;
-    pointer-events: none;
-  }
-  .pillar.expanded .pillar-details {
-    max-height: 600px;
-    opacity: 1;
-    margin-top: 1.2rem;
-    pointer-events: auto;
-  }
-  .pillar:focus {
-    box-shadow: 0 0 0 3px #a5b4fc;
-    outline: none;
-  }
-  .pillar-view-more {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.98rem;
-    color: #4f46e5;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 0.7rem;
-    margin-bottom: 0.2rem;
-    user-select: none;
-    transition: color 0.2s;
-  }
-  .pillar:hover .pillar-view-more,
-  .pillar:focus .pillar-view-more {
-    color: #3730a3;
-  }
-  .pillar-arrow {
-    display: inline-block;
-    margin-left: 0.3em;
-    font-size: 1.1em;
-    transition: transform 0.3s;
-  }
-  .pillar.expanded .pillar-arrow {
-    transform: rotate(180deg);
-  }
-  /* ...existing code... */
-  .takeaway-image-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    margin-bottom: 1.1rem;
-  }
-  .takeaway-image {
-    width: 100%;
-    max-width: 340px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 4px 16px rgba(79,70,229,0.08);
-    transition: transform 0.3s;
-  }
-  .takeaway-card:hover .takeaway-image {
-    transform: scale(1.04) translateY(-2px);
-  }
-  /* ...existing code... */
-  .takeaway-icon { display: none !important; }
-  /* ...existing code... */
-  </style>
 </head>
 
 <body>
@@ -117,6 +15,7 @@
   <ul>
     <li><a href="#overview">Overview</a></li>
     <li><a href="#creative-output">Action</a></li>
+    <li><a href="#key-takeaways">Takeaways</a></li>
     <li><a href="#rationale">Rationale</a></li>
     <li><a href="#profile">Profile</a></li>
   </ul>
@@ -135,6 +34,13 @@
     Artificial Intelligence is no longer a distant future, it is embedded in how we study, work,
     communicate, and make decisions. From generative AI tools to automated decision systems, AI
     increasingly shapes what we know, what we trust, and how power circulates in society.
+
+    In my own experience as a Computer Science student at the University of the Philippines Diliman,
+    I have seen both the benefits and challenges of AI integration in education and daily life. AI tools
+    can enhance learning and productivity like summarizing long documents and papers that needs to be read (ahem readings), 
+    but they also raise critical questions about academic integrity and the erosion of critical thinking skills.
+    This advocacy website aims to raise awareness about the ethical use of AI, encouraging students and the public
+    to engage with these technologies thoughtfully and responsibly.
   </p>
 
   <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995" alt="Abstract AI visualization" />
@@ -315,103 +221,111 @@
         </div>
       </div>
     </div>
-
-    <!-- Add simple color swatches to emphasize design choices -->
-    <div class="swatches" aria-hidden="true">
-      <span class="p1"></span><span class="p2"></span><span class="p3"></span>
-    </div>
   </div>
+  </section>
 
-  <!-- NEW: Key Takeaways section -->
-  <div class="takeaways-grid" id="takeaways">
-    <div class="takeaway-card reveal">
-      <div class="takeaway-image-wrap">
-        <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e"
-            alt="Person carefully analyzing information on a screen"
-            style="width:100%; border-radius:14px; margin:0.8rem 0;">
+  <!--Key Takeaways section -->
+  <section id="key-takeaways">
+    <div class="section-header takeaways-header">
+      <div class="header-accent accent-1"></div>
+      <div class="header-accent accent-2"></div>
 
-      </div>
-      <div class="takeaway-title">
-        <span>Start with Skepticism</span>
-        <span class="takeaway-toggle">+</span>
-      </div>
-      <p class="takeaway-description">
-        Don't accept AI outputs at face value. Question the source, verify claims, and consider what data the model was trained on. Critical thinking is your first line of defense against misinformation and errors.
+      <h2>Key Takeaways</h2>
+      <p style="color:#e0e7ff; font-size:1.05rem; max-width:600px; margin:0 auto; text-shadow:0 2px 12px rgba(0,0,0,0.18); text-align:center;">
+        Reflect on these essential principles to guide your ethical and responsible use of AI technologies.
       </p>
-      <div class="takeaway-stats">
-        <div class="stat-item">
-          <div class="stat-name">
-            AI systems can produce misleading or biased outputs, making critical evaluation essential for users.
-            <br>
-            <a href="https://mb.com.ph/2024/10/31/critical-thinking-in-the-use-of-ai"
-              target="_blank" rel="noopener noreferrer">
-              Source: Manila Bulletin — “Critical thinking in the use of AI” (2024)
-            </a>
-          </div>
-        </div>
-      </div>
+      <hr/>
     </div>
-
-    <div class="takeaway-card reveal">
-      <div class="takeaway-image-wrap">
-        <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7"
-          alt="Digital data privacy and user rights concept"
-          style="width:100%; border-radius:14px; margin:0.8rem 0;">
-      </div>
-      <div class="takeaway-title">
-        <span>Know Your Rights</span>
-        <span class="takeaway-toggle">+</span>
-      </div>
-      <p class="takeaway-description">
-        Understand how your data is used, who owns your work when AI is involved, and what algorithmic decisions may affect you. Transparency and consent matter. Advocate for explainability in systems that impact your life.
-      </p>
-      <div class="takeaway-stats">
-        <div class="stat-item">
-          <div class="stat-name">
-            Without clear rules and safeguards, AI systems can harm the public through discrimination,
-            misinformation, and lack of accountability.
-            <br>
-            <a href="https://www.pids.gov.ph/details/news/press-releases/ai-without-rules-can-harm-the-public-experts-warn"
-              target="_blank" rel="noopener noreferrer">
-              Source: Philippine Institute for Development Studies (PIDS)
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="takeaway-card reveal">
-      <div class="takeaway-image-wrap">
-        <img src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg"
-              alt="People collaborating and making responsible decisions"
+    <div class="takeaways-grid" id="takeaways">
+      <div class="takeaway-card reveal">
+        <div class="takeaway-image-wrap">
+          <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e"
+              alt="Person carefully analyzing information on a screen"
               style="width:100%; border-radius:14px; margin:0.8rem 0;">
+
+        </div>
+        <div class="takeaway-title">
+          <span>Start with Skepticism</span>
+          <span class="takeaway-toggle">+</span>
+        </div>
+        <p class="takeaway-description">
+          Don't accept AI outputs at face value. Question the source, verify claims, and consider what data the model was trained on. Critical thinking is your first line of defense against misinformation and errors.
+        </p>
+        <div class="takeaway-stats">
+          <div class="stat-item">
+            <div class="stat-name">
+              AI systems can produce misleading or biased outputs, making critical evaluation essential for users.
+              <br>
+              <a href="https://mb.com.ph/2024/10/31/critical-thinking-in-the-use-of-ai"
+                target="_blank" rel="noopener noreferrer">
+                Source: Manila Bulletin — “Critical thinking in the use of AI” (2024)
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="takeaway-title">
-        <span>Act Responsibly</span>
-        <span class="takeaway-toggle">+</span>
+
+      <div class="takeaway-card reveal">
+        <div class="takeaway-image-wrap">
+          <img src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7"
+            alt="Digital data privacy and user rights concept"
+            style="width:100%; border-radius:14px; margin:0.8rem 0;">
+        </div>
+        <div class="takeaway-title">
+          <span>Know Your Rights</span>
+          <span class="takeaway-toggle">+</span>
+        </div>
+        <p class="takeaway-description">
+          Understand how your data is used, who owns your work when AI is involved, and what algorithmic decisions may affect you. Transparency and consent matter. Advocate for explainability in systems that impact your life.
+        </p>
+        <div class="takeaway-stats">
+          <div class="stat-item">
+            <div class="stat-name">
+              Without clear rules and safeguards, AI systems can harm the public through discrimination,
+              misinformation, and lack of accountability.
+              <br>
+              <a href="https://www.pids.gov.ph/details/news/press-releases/ai-without-rules-can-harm-the-public-experts-warn"
+                target="_blank" rel="noopener noreferrer">
+                Source: Philippine Institute for Development Studies (PIDS)
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="takeaway-description">
-        Use AI as a tool to amplify your thinking, not replace it. Acknowledge when you've used AI, credit human creators, and choose to engage with technology that aligns with your values. Every choice shapes the future.
-      </p>
-      <div class="takeaway-stats">
-        <div class="stat-item">
-          <div class="stat-name">
-            Ethical AI use requires transparency, accountability, and respect for human rights,
-            according to international and local experts.
-            <br>
-            <a href="https://philippines.un.org/en/254441-un-convenes-forum-ethical-use-ai"
-              target="_blank" rel="noopener noreferrer">
-              Source: United Nations Philippines — Ethical Use of AI
-            </a>
+
+      <div class="takeaway-card reveal">
+        <div class="takeaway-image-wrap">
+          <img src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg"
+                alt="People collaborating and making responsible decisions"
+                style="width:100%; border-radius:14px; margin:0.8rem 0;">
+        </div>
+        <div class="takeaway-title">
+          <span>Act Responsibly</span>
+          <span class="takeaway-toggle">+</span>
+        </div>
+        <p class="takeaway-description">
+          Use AI as a tool to amplify your thinking, not replace it. Acknowledge when you've used AI, credit human creators, and choose to engage with technology that aligns with your values. Every choice shapes the future.
+        </p>
+        <div class="takeaway-stats">
+          <div class="stat-item">
+            <div class="stat-name">
+              Ethical AI use requires transparency, accountability, and respect for human rights,
+              according to international and local experts.
+              <br>
+              <a href="https://philippines.un.org/en/254441-un-convenes-forum-ethical-use-ai"
+                target="_blank" rel="noopener noreferrer">
+                Source: United Nations Philippines — Ethical Use of AI
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
 <section id="rationale">
   <!-- Creative & Interactive Background and Rationale Section -->
-  <div class="rationale-wrapper" style="padding: 2.5rem 1.5rem 2rem 1.5rem; margin-bottom:2.5rem; overflow:hidden;">
+  <div class="rationale-wrapper" style="padding: 2.5rem 2.5rem 2rem 2.5rem; margin-bottom:2.5rem; overflow:hidden;">
     <svg class="rationale-accent" width="90" height="90" viewBox="0 0 90 90" fill="none" style="position:absolute;top:18px;right:18px;z-index:0;">
       <rect x="10" y="10" width="70" height="70" rx="18" stroke="#7c3aed" stroke-width="4" stroke-opacity="0.35"/>
       <rect x="25" y="25" width="40" height="40" rx="10" stroke="#06b6d4" stroke-width="2" stroke-opacity="0.55"/>
