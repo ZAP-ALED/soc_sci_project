@@ -802,3 +802,101 @@ ul { margin-left: 1.2rem; }
   position: relative;
   z-index: 1;
 }
+
+  .rationale-tab {
+    background: #e0e7ff;
+    color: #4f46e5;
+    padding: 0.5rem 1.2rem;
+    border-radius: 16px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .rationale-tab.active {
+    background: #4f46e5 !important;
+    color: #fff !important;
+  }
+  .rationale-accent {
+    animation: rationaleFloat 14s ease-in-out infinite alternate;
+  }
+  @keyframes rationaleFloat {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-12px) scale(1.04); }
+    100% { transform: translateY(8px) scale(1.01); }
+  }
+  .pillar {
+    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s, background 0.3s;
+    outline: none;
+  }
+  .pillar.expanded {
+    border-color: #4f46e5;
+    background: linear-gradient(135deg, #eef2ff 60%, #e0e7ff 100%);
+    box-shadow: 0 16px 48px rgba(79,70,229,0.10);
+    z-index: 2;
+  }
+  .pillar-details {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(.4,2,.6,1), opacity 0.4s;
+    margin-top: 0;
+    pointer-events: none;
+  }
+  .pillar.expanded .pillar-details {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 1.2rem;
+    pointer-events: auto;
+  }
+  .pillar:focus {
+    box-shadow: 0 0 0 3px #a5b4fc;
+    outline: none;
+  }
+  .pillar-view-more {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.98rem;
+    color: #4f46e5;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.7rem;
+    margin-bottom: 0.2rem;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  .pillar:hover .pillar-view-more,
+  .pillar:focus .pillar-view-more {
+    color: #3730a3;
+  }
+  .pillar-arrow {
+    display: inline-block;
+    margin-left: 0.3em;
+    font-size: 1.1em;
+    transition: transform 0.3s;
+  }
+  .pillar.expanded .pillar-arrow {
+    transform: rotate(180deg);
+  }
+
+  .takeaway-image-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 1.1rem;
+  }
+  .takeaway-image {
+    width: 100%;
+    max-width: 340px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 16px rgba(79,70,229,0.08);
+    transition: transform 0.3s;
+  }
+  .takeaway-card:hover .takeaway-image {
+    transform: scale(1.04) translateY(-2px);
+  }
+
+  .takeaway-icon { display: none !important; }
